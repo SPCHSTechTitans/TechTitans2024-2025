@@ -23,7 +23,7 @@ public class SlideFunctions {
         leftSlideMotor = hardwareMap.get(DcMotor.class, "left_slide_motor");
         slideSafety = hardwareMap.get(TouchSensor.class,"slide_safety");
         rightSlideMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftSlideMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftSlideMotor.setDirection(DcMotor.Direction.REVERSE);
         //reset encoders
         rightSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -47,6 +47,7 @@ public class SlideFunctions {
         //slide safety
         if ((rightSlidePosition >= 1000) && (slidePower > 0) || slideSafety.isPressed() && slidePower < 0){
             slidePower = 0;
+            telemetry.addData("Slide Safety Is Pressed", slideSafety);
         } 
 
         rightSlideMotor.setPower(slidePower * slidePowerConst);
