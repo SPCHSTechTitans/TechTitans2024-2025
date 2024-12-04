@@ -23,7 +23,7 @@ public class SlideFunctions {
         leftSlideMotor = hardwareMap.get(DcMotor.class, "left_slide_motor");
         slideSafety = hardwareMap.get(TouchSensor.class,"slide_safety");
         rightSlideMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftSlideMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftSlideMotor.setDirection(DcMotor.Direction.FORWARD);
         //reset encoders
         rightSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
