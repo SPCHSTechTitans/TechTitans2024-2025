@@ -36,6 +36,26 @@ public class RightAuto {
             }catch(InterruptedException e){
                 System.out.println("got interrupted!");
             }
+            leftFrontDrive.setPower(1);
+            rightFrontDrive.setPower(-1);
+            leftBackDrive.setPower(-1);
+            rightBackDrive.setPower(1);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            leftFrontDrive.setPower(1);
+            rightFrontDrive.setPower(1);
+            leftBackDrive.setPower(1);
+            rightBackDrive.setPower(1);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+
             leftFrontDrive.setPower(0);
             rightFrontDrive.setPower(0);
             leftBackDrive.setPower(0);
