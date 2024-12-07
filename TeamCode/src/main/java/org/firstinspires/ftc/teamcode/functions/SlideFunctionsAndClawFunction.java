@@ -71,15 +71,7 @@ public class SlideFunctionsAndClawFunction {
         // I set this to 0.9 in the small chance that our controller breaks and no one notices
         // In an ideal world, it should be set to 1
         if (gamepad2.right_trigger >= 0.9) {
-            clawButtonPressed = true;
-        }
-        else {
-            clawButtonPressed = false;
-        }
-
-        // This function makes so that the claw is closed by default, opens when the driver pressed the right trigger,
-        // and closes when the driver releases the right trigger. These magic numbers were found out through testing.
-        if (clawButtonPressed) {
+            telemetry.addData("Here's the line for right trigger", gamepad2.right_trigger);
             Claw.setPosition(0.25);
         }
         else {
@@ -90,15 +82,11 @@ public class SlideFunctionsAndClawFunction {
 
     public void WristControl(Gamepad gamepad2, Telemetry telemetry) {
         telemetry.addData("Here's the line for the wrist", Wrist.getPosition());
-        if (gamepad2.y) {
-            double Current = Wrist.getPosition();
-            if (Current >= 1) {
-                Wrist.setPosition(0.25);
-            } else if (Current <= 0.25) {
-                Wrist.setPosition(0.6);
-            } else if ((Current >= 0.25) && (Current <= 1)) {
-                Wrist.setPosition(1);
-            }
+        if (gamepad2.left_trigger >= 0.9) {
+            Wrist.setPosition(0);
+        }
+        else {
+            Wrist.setPosition(1);
         }
     }
 
