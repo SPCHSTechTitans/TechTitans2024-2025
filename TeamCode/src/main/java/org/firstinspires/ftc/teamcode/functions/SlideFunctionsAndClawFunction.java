@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.functions;
 
+import java.util.concurrent.TimeUnit;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,6 +18,9 @@ public class SlideFunctionsAndClawFunction {
     public TouchSensor slideSafety;
     public Servo Claw;
     public Servo Wrist;
+
+    public String wristPosition = "down";
+    boolean canChangeWristPosition = true;
 
     public SlideFunctionsAndClawFunction(HardwareMap hardwareMap) {
 
@@ -50,7 +55,7 @@ public class SlideFunctionsAndClawFunction {
 
         //slide safety
         // Gleb here, this works compeltely off of encoder values because the touch sensor is not setup properly yet.
-        if ((rightSlidePosition <= -6000) && slidePower > 0 || (rightSlidePosition >= -100) && slidePower < 0) {
+        if ((rightSlidePosition <= -6000) && slidePower > 0 || (slideSafety.isPressed()) && slidePower < 0) {
             slidePower = 0;
             telemetry.addData("Slide Safety is working", slideSafety);
         }
@@ -70,24 +75,35 @@ public class SlideFunctionsAndClawFunction {
         boolean clawButtonPressed;
         // I set this to 0.9 in the small chance that our controller breaks and no one notices
         // In an ideal world, it should be set to 1
-        if (gamepad2.right_trigger >= 0.9) {
+        if (gamepad2.right_trigger >= 0.9 && (Wrist.getPosition() <= 0.4)) { // Open
             telemetry.addData("Here's the line for right trigger", gamepad2.right_trigger);
-            Claw.setPosition(0.25);
+            Claw.setPosition(0.35);
         }
-        else {
-            Claw.setPosition(0.7);
+        else if (gamepad2.right_trigger < 0.9) { // Closed
+            Claw.setPosition(0.8);
         }
 
     }
 
     public void WristControl(Gamepad gamepad2, Telemetry telemetry) {
-        telemetry.addData("Here's the line for the wrist", Wrist.getPosition());
-        if (gamepad2.left_trigger >= 0.9) {
-            Wrist.setPosition(0);
-        }
-        else {
+        telemetry.addData("Wrist Position", Wrist.getPosition());
+        telemetry.addData("Wrist String", wristPosition);
+
+        if (gamepad2.y) {
             Wrist.setPosition(1);
         }
+        if (gamepad2.x) {
+            Wrist.setPosition(0.3);
+        }
+        if (gamepad2.a) {
+            Wrist.setPosition(0);
+        }
+
+        /* if (gamepad2.left_trigger > 0) {
+            Wrist.setPosition(0);
+        } else if (gamepad2.left_trigger <= 0) {
+            Wrist.setPosition(0.9);
+        } */
     }
 
 }

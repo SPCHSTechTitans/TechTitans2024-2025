@@ -16,7 +16,7 @@ public class LeftMainAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // Wait for the game to start (driver presses PLAY)
+        // Wait for the game to start \(driver presses PLAY)
         telemetry.addData("Initialized","Status");
         telemetry.update();
         waitForStart();
