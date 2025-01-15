@@ -45,7 +45,7 @@ public class LeftAuto {
             leftBackDrive.setPower(-1);
             rightBackDrive.setPower(1);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -19,9 +19,6 @@ public class SlideFunctionsAndClawFunction {
     public Servo Claw;
     public Servo Wrist;
 
-    public String wristPosition = "down";
-    boolean canChangeWristPosition = true;
-
     public SlideFunctionsAndClawFunction(HardwareMap hardwareMap) {
 
         rightSlideMotor = hardwareMap.get(DcMotor.class, "right_slide_motor");
@@ -87,7 +84,6 @@ public class SlideFunctionsAndClawFunction {
 
     public void WristControl(Gamepad gamepad2, Telemetry telemetry) {
         telemetry.addData("Wrist Position", Wrist.getPosition());
-        telemetry.addData("Wrist String", wristPosition);
 
         if (gamepad2.y) {
             Wrist.setPosition(1);
@@ -98,12 +94,6 @@ public class SlideFunctionsAndClawFunction {
         if (gamepad2.a) {
             Wrist.setPosition(0);
         }
-
-        /* if (gamepad2.left_trigger > 0) {
-            Wrist.setPosition(0);
-        } else if (gamepad2.left_trigger <= 0) {
-            Wrist.setPosition(0.9);
-        } */
     }
 
 }
