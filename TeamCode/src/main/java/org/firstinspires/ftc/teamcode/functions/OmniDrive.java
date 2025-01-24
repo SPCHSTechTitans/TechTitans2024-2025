@@ -10,10 +10,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class OmniDrive {
 
 
-    private final DcMotor leftFrontDrive;
-    private final DcMotor leftBackDrive;
-    private final DcMotor rightFrontDrive;
-    private final DcMotor rightBackDrive;
+    public  DcMotor leftFrontDrive;
+    public  DcMotor leftBackDrive;
+    public  DcMotor rightFrontDrive;
+    public  DcMotor rightBackDrive;
 
     public OmniDrive(HardwareMap hardwareMap) {
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
