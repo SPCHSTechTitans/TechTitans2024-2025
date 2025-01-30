@@ -42,7 +42,7 @@ public class SlideFunctionsAndClawFunction {
     public void SlideControl(Gamepad gamepad2, Telemetry telemetry){
 
         double slidePowerConst = 0.9; //max power of slide
-        double slidePower = -gamepad2.left_stick_y;
+        double slidePower = -gamepad2.right_stick_y;
 
         //get position of slides
         int rightSlidePosition = rightSlideMotor.getCurrentPosition();
@@ -90,6 +90,7 @@ public class SlideFunctionsAndClawFunction {
         // I set this to 0.9 in the small chance that our controller breaks and no one notices
         // in an ideal world, it should be set to 1
         if (gamepad2.right_trigger >= 0.9) {
+            telemetry.addData("right trigger data: ", gamepad2.right_trigger);
             clawButtonPressed = true;
         }
         else {
