@@ -15,7 +15,7 @@ public class SlideFunctionsAndClawFunction {
     public DcMotor leftSlideMotor;
     public TouchSensor slideSafety;
     public Servo Claw;
-    public Servo Wrist;
+    public DcMotor Wrist;
 
     public SlideFunctionsAndClawFunction(HardwareMap hardwareMap) {
 
@@ -35,7 +35,7 @@ public class SlideFunctionsAndClawFunction {
         //'initialize' the Claw
         Claw = hardwareMap.get(Servo.class, "Claw");
         //'initialise' the Wrist
-        Wrist = hardwareMap.get(Servo.class, "Wrist");
+        Wrist = hardwareMap.get(DcMotor.class, "Wrist");
     }
 
 
@@ -109,16 +109,14 @@ public class SlideFunctionsAndClawFunction {
     }
 
     public void WristControl(Gamepad gamepad2, Telemetry telemetry) {
-        telemetry.addData("Here's the line for the wrist", Wrist.getPosition());
-        if (gamepad2.y) {
-            Wrist.setPosition(1);
+        if ((gamepad2.left_stick_y) >= 0.1) {
+            Wrist.setPower(1);
         }
-        if (gamepad2.x) {
-            Wrist.setPosition(0.6);
+        else if ((gamepad2.left_stick_y) <= -0.1) {
+            Wrist.setPower(-1);
         }
-        if (gamepad2.a) {
-            Wrist.setPosition(0.4);
-
+        else {
+            Wrist.setPower(0);
         }
     }
 
