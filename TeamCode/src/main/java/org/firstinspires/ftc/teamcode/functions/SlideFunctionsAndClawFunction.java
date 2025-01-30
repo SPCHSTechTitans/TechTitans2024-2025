@@ -41,8 +41,8 @@ public class SlideFunctionsAndClawFunction {
 
     public void SlideControl(Gamepad gamepad2, Telemetry telemetry){
 
-        double slidePowerConst = 0.9; //max power of slide
-        double slidePower = -gamepad2.right_stick_y;
+        double slidePowerConst = 0.5; //max power of slide
+        double slidePower = gamepad2.right_stick_y;
 
         //get position of slides
         int rightSlidePosition = rightSlideMotor.getCurrentPosition();
@@ -73,6 +73,7 @@ public class SlideFunctionsAndClawFunction {
             slidePower = 0;
             telemetry.addData("Slide safety is working", slideSafety);
         }
+        telemetry.addData("Slide safety is awesome", rightSlidePosition);
 
         rightSlideMotor.setPower(slidePower * slidePowerConst);
         leftSlideMotor.setPower(slidePower * slidePowerConst);
@@ -101,10 +102,11 @@ public class SlideFunctionsAndClawFunction {
         // and closes when the driver releases the right trigger. These magic numbers were found out through testing.
         if (clawButtonPressed) {
             //6.75 difference
-            Claw.setPosition(0.5);
+            Claw.setPosition(0);
         }
         else {
-            Claw.setPosition(0.8);
+            Claw.setPosition(0.4);
+
         }
 
     }
