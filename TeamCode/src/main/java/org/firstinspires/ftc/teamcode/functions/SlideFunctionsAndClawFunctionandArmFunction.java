@@ -9,15 +9,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-public class SlideFunctionsAndClawFunction {
+public class SlideFunctionsAndClawFunctionandArmFunction {
 
     public DcMotor rightSlideMotor;
     public DcMotor leftSlideMotor;
     public TouchSensor slideSafety;
-    public Servo Claw;
-    public DcMotor Wrist;
+    public Servo claw;
+    public DcMotor arm;
+    public Servo wristServo;
 
-    public SlideFunctionsAndClawFunction(HardwareMap hardwareMap) {
+    public SlideFunctionsAndClawFunctionandArmFunction(HardwareMap hardwareMap) {
 
         rightSlideMotor = hardwareMap.get(DcMotor.class, "right_slide_motor");
         leftSlideMotor = hardwareMap.get(DcMotor.class, "left_slide_motor");
@@ -33,9 +34,10 @@ public class SlideFunctionsAndClawFunction {
         rightSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //'initialize' the Claw
-        Claw = hardwareMap.get(Servo.class, "Claw");
+        claw = hardwareMap.get(Servo.class, "Claw");
         //'initialise' the Wrist
-        Wrist = hardwareMap.get(DcMotor.class, "Wrist");
+        arm = hardwareMap.get(DcMotor.class, "Arm");
+        wristServo = hardwareMap.get(Servo.class, "wrist");
     }
 
 
@@ -84,43 +86,47 @@ public class SlideFunctionsAndClawFunction {
     }
 
     public void ClawControl(Gamepad gamepad2, Telemetry telemetry) {
-        boolean ClawOpen = true;
-        telemetry.addData("Is claw open?", ClawOpen);
 
         boolean clawButtonPressed;
         // I set this to 0.9 in the small chance that our controller breaks and no one notices
         // in an ideal world, it should be set to 1
-        if (gamepad2.right_trigger >= 0.9) {
-            telemetry.addData("right trigger data: ", gamepad2.right_trigger);
+        if (gamepad2.a) {
             clawButtonPressed = true;
+            claw.setPosition(1);
+            telemetry.addData("Is claw open?",clawButtonPressed);
         }
         else {
             clawButtonPressed = false;
+            claw.setPosition(0.5);
+            telemetry.addData("Is claw open?", clawButtonPressed);
         }
 
-        // This function makes so that the claw is closed by default, opens when the driver pressed the right trigger,
-        // and closes when the driver releases the right trigger. These magic numbers were found out through testing.
-        if (clawButtonPressed) {
-            //6.75 difference
-            Claw.setPosition(0);
-        }
-        else {
-            Claw.setPosition(0.4);
-
-        }
 
     }
 
+    public void ArmControl(Gamepad gamepad2, Telemetry telemetry) {
+        arm.setPower(gamepad2.left_stick_y/2);
+    }
     public void WristControl(Gamepad gamepad2, Telemetry telemetry) {
-        if ((gamepad2.left_stick_y) >= 0.1) {
-            Wrist.setPower(1);
+        boolean LeftDpad = false;
+        boolean UpDpad = false;
+        boolean RightDpad = false;
+        if (gamepad2.dpad_left) {
+            wristServo.setPosition(0);
+            LeftDpad = true;
         }
-        else if ((gamepad2.left_stick_y) <= -0.1) {
-            Wrist.setPower(-1);
+        else if (gamepad2.dpad_up) {
+            wristServo.setPosition(0.2);
+            UpDpad = true;
         }
-        else {
-            Wrist.setPower(0);
+        else if (gamepad2.dpad_right) {
+            wristServo.setPosition(0.5);
+            RightDpad = true;
         }
+        telemetry.addData("Servo value: ", wristServo.getPosition());
+        telemetry.addData("LeftDpad: ", LeftDpad);
+        telemetry.addData("UpDpad: ", UpDpad);
+        telemetry.addData("RightDpad: ", RightDpad);
     }
 
 }

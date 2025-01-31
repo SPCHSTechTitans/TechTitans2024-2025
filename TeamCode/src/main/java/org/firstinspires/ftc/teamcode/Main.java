@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.functions.OmniDrive;
-import org.firstinspires.ftc.teamcode.functions.SlideFunctionsAndClawFunction;
+import org.firstinspires.ftc.teamcode.functions.SlideFunctionsAndClawFunctionandArmFunction;
 
 @TeleOp(name="Main", group="Linear OpMode")
 public class Main extends LinearOpMode {
@@ -24,7 +24,7 @@ public class Main extends LinearOpMode {
 
         // Initialize hardware
         OmniDrive OmniFunction = new OmniDrive(hardwareMap);
-        SlideFunctionsAndClawFunction SlidesAndClaw = new SlideFunctionsAndClawFunction(hardwareMap);
+        SlideFunctionsAndClawFunctionandArmFunction SlidesAndClaw = new SlideFunctionsAndClawFunctionandArmFunction(hardwareMap);
 
         // Run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -32,6 +32,7 @@ public class Main extends LinearOpMode {
             OmniFunction.OmniUpdate(gamepad1,telemetry);
             SlidesAndClaw.SlideControl(gamepad2, telemetry);
             SlidesAndClaw.ClawControl(gamepad2, telemetry);
+            SlidesAndClaw.ArmControl(gamepad2, telemetry);
             SlidesAndClaw.WristControl(gamepad2, telemetry);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
